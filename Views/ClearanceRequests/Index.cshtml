@@ -1,0 +1,110 @@
+@model IEnumerable<Electronic_Clearance_Platform.Models.ClearanceRequest>
+@{
+    ViewData["Title"] = "قائمة طلبات براءة الذمة";
+}
+<div class="container-fluid px-3 pt-3" style="margin-top: 0;"dir="rtl">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        <h2 class="fw-bold text-primary">📋 قائمة طلبات براءة الذمة</h2>
+        <a asp-action="Create" class="btn btn-success btn-lg shadow-sm">
+            <i class="bi bi-plus-circle"></i> تقديم طلب جديد
+        </a>
+    </div>
+    <div class="card shadow-sm mb-2 border-0 bg-light">
+        <div class="card-body">
+            <form asp-action="Index" method="get" class="row g-2 align-items-center">
+                <div class="col-md-9 col-sm-8">
+                    <input type="text" name="searchString" value="@ViewData["CurrentFilter"]"
+                           class="form-control form-control-lg"
+                           placeholder="🔍 ابحث عن اسم الطالب، الرقم الجامعي، أو القسم..." />
+                </div>
+                <div class="col-md-3 col-sm-4 d-flex gap-2">
+                    <button type="submit" class="btn btn-primary btn-lg w-100 fw-bold">بحث</button>
+                    @if (!string.IsNullOrEmpty(ViewData["CurrentFilter"]?.ToString()))
+                    {
+                        <a asp-action="Index" class="btn btn-outline-secondary btn-lg">إلغاء</a>
+                    }
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="card shadow-sm border-0">
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0" style="text-align: right !important;" dir="rtl">
+                    <thead class="table-dark">
+
+                        <tr>
+                            <th>#</th>
+                            <th>الاسم الكامل</th>
+                            <th>الرقم التعريفي / الجامعي</th>
+                            <th>القسم</th>
+                            <th>المكتبة</th>
+                            <th>المالية</th>
+                            <th>شؤون الطلبة</th>
+                            <th>تاريخ الطلب</th>
+                            <th>حالة الطلب</th>
+                            <th>الإجراءات</th>
+                            <th>تغيير سريع للحالة</th>
+                        </tr>
+                    </thead>
+                    @{
+                        int i =  1;
+                    }
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@(i++)</td>
+                                <td class="fw-bold">@item.FullName</td>
+                                <td>@item.IdentificationNumber</td>
+                                <td>@item.Department</td>
+                                <td>
+                                    <span class="badge @(item.IsLibraryCleared ? "bg-success" : "bg-warning")">
+                                        @(item.IsLibraryCleared ? "مقبول" : "قيد الانتظار")
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="badge @(item.IsFinanceCleared ? "bg-success" : "bg-warning")">
+                                        @(item.IsFinanceCleared ? "مقبول" : "قيد الانتظار")
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="badge @(item. IsStudentAffairsCleared ? "bg-success" : "bg-warning")">
+                                        @(item. IsStudentAffairsCleared ? "مقبول" : "قيد الانتظار")
+                                    </span>
+                                </td>
+                                <td>@item.RequestDate.ToString("yyyy/MM/dd")</td>
+                                <td>
+                                    <span class="badge @(item.Status == "مقبول" ? "bg-success" : "bg-warning")">
+                                        @item.Status
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="btn-group btn-group-sm" role="group">
+                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary">تعديل</a>
+                                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info">تفاصيل</a>
+                                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">حذف</a>
+                                    </div>
+                                </td>
+                                <td>
+                                    <form asp-action="QuickUpdate" method="post" class="d-inline-flex gap-1">
+                                        <input type="hidden" name="id" value="@item.Id" />
+                                        <button type="submit" name="status" value="مقبول" class="btn btn-success btn-sm">قبول ✓</button>
+                                        <button type="submit" name="status" value="مرفوض" class="btn btn-danger btn-sm">رفض ✕</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    
+                    <style>
+                                            body {
+                                                padding-top: 0 !important;
+                                            }
+
+                                            .navbar {
+                                                margin-bottom: 0 !important;
+                                            }
+                    </style>

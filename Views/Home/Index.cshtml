@@ -1,0 +1,73 @@
+﻿@{
+    ViewData["Title"] = "الرئيسية";
+}
+
+<div class="container py-4">
+    <!-- عنوان ترحيبي -->
+    <div class="text-center mb-5">
+        <h1 class="display-5 fw-bold text-primary mb-2">منصة براءة الذمة الإلكترونية</h1>
+        <p class="lead text-muted">نظام إدارة ومتابعة طلبات براءة الذمة للطلاب والموظفين بكل سهولة ويسر.</p>
+    </div>
+
+    <!-- بطاقات الإحصائيات -->
+    <div class="row g-4 mb-5">
+        <!-- إجمالي الطلبات -->
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm rounded-3 bg-primary text-white p-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="text-white-50 mb-1">إجمالي الطلبات</h6>
+                        <h2 class="fw-bold mb-0">@(ViewBag.TotalRequests ?? 0)</h2>
+                    </div>
+                    <div class="fs-1 opacity-50">📋</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- الطلبات المقبولة -->
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm rounded-3 bg-success text-white p-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="text-white-50 mb-1">الطلبات المقبولة</h6>
+                        <h2 class="fw-bold mb-0">@(ViewBag.ApprovedRequests ?? 0)</h2>
+                    </div>
+                    <div class="fs-1 opacity-50">✅</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- الطلبات قيد الانتظار -->
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm rounded-3 bg-warning text-dark p-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="text-dark-50 mb-1">قيد الانتظار</h6>
+                        <h2 class="fw-bold mb-0">@(ViewBag.PendingRequests ?? 0)</h2>
+                    </div>
+                    <div class="fs-1 opacity-50">⏳</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- الطلبات المرفوضة -->
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm rounded-3 bg-danger text-white p-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="text-white-50 mb-1">الطلبات المرفوضة</h6>
+                        <h2 class="fw-bold mb-0">@(ViewBag.RejectedRequests ?? 0)</h2>
+                    </div>
+                    <div class="fs-1 opacity-50">❌</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- زر الانتقال إلى الجدول -->
+    <div class="text-center">
+        <a asp-controller="ClearanceRequests" asp-action="Index" class="btn btn-primary btn-lg px-5 py-3 rounded-pill shadow">
+            عرض إدارة الطلبات 🚀
+        </a>
+    </div>
+</div>

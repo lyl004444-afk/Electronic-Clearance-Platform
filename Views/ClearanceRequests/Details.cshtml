@@ -1,0 +1,62 @@
+@model Electronic_Clearance_Platform.Models.ClearanceRequest
+
+@{
+    ViewData["Title"] = "تفاصيل طلب براءة الذمة";
+}
+
+<div class="container mt-4" dir="rtl">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg border-0 rounded-3">
+                <div class="card-header bg-info text-white py-3">
+                    <h4 class="mb-0 fw-bold"><i class="bi bi-info-circle"></i> تفاصيل طلب براءة الذمة</h4>
+                </div>
+                <div class="card-body p-4">
+                    <dl class="row fs-5">
+                        <dt class="col-sm-4 text-muted">الاسم الكامل:</dt>
+                        <dd class="col-sm-8 fw-bold text-dark">@Model.FullName</dd>
+
+                        <dt class="col-sm-4 text-muted">الرقم التعريفي / الجامعي:</dt>
+                        <dd class="col-sm-8 text-dark">@Model.IdentificationNumber</dd>
+
+                        <dt class="col-sm-4 text-muted">القسم:</dt>
+                        <dd class="col-sm-8 text-dark">@Model.Department</dd>
+
+                        <dt class="col-sm-4 text-muted">تاريخ الطلب:</dt>
+                        <dd class="col-sm-8 text-dark">@Model.RequestDate.ToString("yyyy/MM/dd")</dd>
+
+                        <dt class="col-sm-4 text-muted">حالة الطلب:</dt>
+                        <dd class="col-sm-8">
+                            <span class="badge bg-warning text-dark px-3 py-2 fs-6">@Model.Status</span>
+                        </dd>
+                    </dl>
+
+                    <hr />
+
+                    <div class="d-flex justify-content-between pt-2">
+                        <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-warning btn-lg px-4 fw-bold">
+                            <i class="bi bi-pencil-square"></i> تعديل
+                        </a>
+                        <button onclick="window.print()" class="btn btn-success btn-lg px-4 ms-2">
+                            <i class="bi bi-printer"></i> طباعة
+                        </button>
+                        <a asp-action="Index" class="btn btn-secondary btn-lg px-4">
+                            <i class="bi bi-arrow-right"></i> العودة للقائمة
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    @@media print {
+        header, footer, .btn, a {
+            display: none !important;
+        }
+
+        body {
+            background-color: #fff !important;
+        }
+    }
+</style>
